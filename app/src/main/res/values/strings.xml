@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MovieTestApp</string>
+    <string name="login">Continue with facebook</string>
+    <string name="films">Films</string>
+    <string name="favorites">Favorites</string>
+    <string name="share">Share</string>
+    <string name="like">Like</string>
+    <string name="remove">Remove</string>
+</resources>
