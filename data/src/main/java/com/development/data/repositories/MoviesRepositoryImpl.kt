@@ -1,5 +1,6 @@
 package com.development.data.repositories
 
+import android.util.Log
 import com.development.data.datasources.LocalDataSource
 import com.development.data.datasources.RemoteDataSource
 import com.development.data.entities.MoviesDbModel
@@ -22,7 +23,7 @@ class MoviesRepositoryImpl @Inject constructor(
             val convertedRemoteData: List<MoviesDbModel> = responseDataMapper.toNewsModel(remoteData)
             localDataSource.setMoviesToDatabase(convertedRemoteData)
             convertedRemoteData.map { databaseDataMapper.toMovieLocal(it) }.toList()
-        } catch (_: Exception) {
+        } catch (e: Exception) {
             val localSavedData = localDataSource.getMoviesFromDatabase()
             if (localSavedData.isEmpty()) {
                 emptyList()
@@ -32,7 +33,13 @@ class MoviesRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun changeFavoriteStatusMovie(movie: MovieLocal) {
+    override suspend fun getFavoriteMovies(): List<MovieLocal> {
+        return localDataSource.getFavoriteMoviesFromDatabase().map {
+            databaseDataMapper.toMovieLocal(it) }.toList()
+    }
+
+    override suspend fun changeFavoriteStatusMovie(movie: MovieLocal):List<MovieLocal> {
         localDataSource.updateFavoriteStatus(movie)
+        return getFavoriteMovies()
     }
 }

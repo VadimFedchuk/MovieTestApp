@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -18,12 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.development.domain.entities.DataModel
-import com.development.domain.entities.MovieLocal
 import com.development.movietestapp.R
-import com.development.movietestapp.ui.listItems.DateViewItem
-import com.development.movietestapp.ui.listItems.LoadingViewItem
-import com.development.movietestapp.ui.listItems.MovieViewItem
 import com.development.movietestapp.ui.theme.DarkBlue
 import com.development.movietestapp.ui.theme.MainBackgroundColor
 import com.development.movietestapp.ui.views.CircleImage
@@ -53,7 +46,7 @@ fun HomeScreen(navController: NavHostController) {
             tabs = tabs,
             pagerState = pagerState
         )
-        TabsContent(pagerState = pagerState)
+        TabsContent(pagerState = pagerState, viewModel = moviesViewModel)
     }
 }
 
@@ -80,7 +73,7 @@ fun TopContainer(avatarUrl: String, tabs: List<Int>, pagerState: PagerState) {
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun TabsContent(pagerState: PagerState) {
+fun TabsContent(pagerState: PagerState, viewModel: MoviesViewModel) {
     HorizontalPager(
         state = pagerState,
         modifier = Modifier
@@ -88,51 +81,9 @@ fun TabsContent(pagerState: PagerState) {
             .background(MainBackgroundColor),
         verticalAlignment = Alignment.Top
     ) {
-        LazyColumn() {
-            items<DataModel>(testList()) { item ->
-                when (item) {
-                    is DataModel.DateModel -> {
-                        DateViewItem(date = item.date)
-                    }
-
-                    is DataModel.MovieModel -> {
-                        MovieViewItem(model = item.movieLocal)
-                    }
-
-                    is DataModel.LoadingMoreModel -> {
-                        LoadingViewItem()
-                    }
-                }
-            }
+        when (it) {
+            0 -> MoviesPage(viewModel = viewModel)
+            1 -> FavoriteMoviesPage(viewModel = viewModel)
         }
     }
-}
-
-fun testList(): List<DataModel> {
-    return listOf(
-        DataModel.DateModel("feb 2021"),
-        DataModel.MovieModel(
-            MovieLocal(
-                1,
-                "title",
-                "American neo-noir black comedy crime film written and directed by Quentin Tarantino",
-                "puasd",
-                "https://media.geeksforgeeks.org/wp-content/uploads/20210101144014/gfglogo.png",
-                5.0,
-                false
-            )
-        ),
-        DataModel.MovieModel(
-            MovieLocal(
-                2,
-                "title",
-                "American neo-noir black comedy crime film written and directed by Quentin Tarantino",
-                "puasd",
-                "https://media.geeksforgeeks.org/wp-content/uploads/20210101144014/gfglogo.png",
-                5.0,
-                true
-            )
-        ),
-        DataModel.LoadingMoreModel
-    )
 }

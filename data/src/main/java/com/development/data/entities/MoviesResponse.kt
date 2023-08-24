@@ -3,7 +3,7 @@ package com.development.data.entities
 import com.google.gson.annotations.SerializedName
 
 data class MoviesResponse(
-    val movieRemotes: List<MovieRemote>?
+    @SerializedName("results") val movieRemotes: List<MovieRemote>?
 )
 
 data class MovieRemote(

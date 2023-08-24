@@ -89,5 +89,7 @@ dependencies {
     implementation("com.facebook.android:facebook-android-sdk:[8,9)")
     implementation("com.facebook.android:facebook-login:latest.release")
 
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+
 
 }

@@ -9,12 +9,12 @@ class GetMoviesUseCase @Inject constructor(
     private val repository: MoviesRepository
 ) {
 
-    suspend operator fun invoke(page: Int): State<List<MovieLocal>> {
+    suspend operator fun invoke(page: Int): State<MutableList<MovieLocal>> {
         val data = repository.getMovies(page)
         return if (data.isEmpty()) {
             State.Failure()
         } else {
-            State.Success(data)
+            State.Success(data.toMutableList())
         }
     }
 }

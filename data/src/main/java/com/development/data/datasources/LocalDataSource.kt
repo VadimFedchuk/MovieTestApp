@@ -8,23 +8,23 @@ import javax.inject.Inject
 class LocalDataSource @Inject constructor(
     private val moviesDatabaseDao: MoviesDatabaseDao
 ) {
-    fun getMoviesFromDatabase(): List<MoviesDbModel> {
+    suspend fun getMoviesFromDatabase(): List<MoviesDbModel> {
         return moviesDatabaseDao.getMoviesFromDatabase()
     }
 
-    fun getFavoriteMoviesFromDatabase(): List<MoviesDbModel> {
+   suspend  fun getFavoriteMoviesFromDatabase(): List<MoviesDbModel> {
         return moviesDatabaseDao.getFavoriteMoviesFromDatabase()
     }
 
-    fun setMoviesToDatabase(data: List<MoviesDbModel>) {
+    suspend fun setMoviesToDatabase(data: List<MoviesDbModel>) {
         moviesDatabaseDao.saveMovies(data)
     }
 
-    fun updateFavoriteStatus(movie: MovieLocal) {
+    suspend fun updateFavoriteStatus(movie: MovieLocal) {
         moviesDatabaseDao.updateBookmarkById(movie.id, !movie.isFavorite)
     }
 
-    fun deleteAllMovies() {
+    suspend fun deleteAllMovies() {
         moviesDatabaseDao.deleteAll()
     }
 }

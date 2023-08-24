@@ -1,15 +1,17 @@
 package com.development.movietestapp.ui.views
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.TabRowDefaults
@@ -36,7 +38,6 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun CircleImage(imageUrl: String) {
-    Log.i("TestDebug", "url $imageUrl")
     Box(
         modifier = Modifier
             .padding(end = 16.dp, top = 16.dp)
@@ -91,5 +92,16 @@ fun Tabs(data: List<Int>, pagerState: PagerState) {
                 )
             }
         }
+    }
+}
+
+@Composable
+fun LoadingView() {
+    Row(
+        modifier = Modifier.fillMaxSize()
+            .padding(top = 16.dp, bottom = 16.dp),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        CircularProgressIndicator(color = DarkBlue)
     }
 }

@@ -11,4 +11,5 @@
     <string name="fb_login_protocol_scheme">fb236045235592786</string>
     <string name="facebook_client_token">405c2cd38b438bfe4007aa84ad7af1ab</string>
     <string name="error_text">Something went wrong</string>
+    <string name="favorite_is_empty">You have not added any movies to favorite yet.</string>
 </resources>

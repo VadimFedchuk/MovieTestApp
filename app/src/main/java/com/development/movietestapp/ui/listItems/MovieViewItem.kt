@@ -1,5 +1,7 @@
 package com.development.movietestapp.ui.listItems
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
@@ -31,7 +34,8 @@ import com.development.movietestapp.R
 import com.development.movietestapp.ui.theme.GreyTextColor
 
 @Composable
-fun MovieViewItem(model: MovieLocal) {
+fun MovieViewItem(model: MovieLocal, onLikeClickCallback:(MovieLocal) -> Unit) {
+    val context = LocalContext.current
     Card(
         shape = RoundedCornerShape(4.dp),
         modifier = Modifier
@@ -72,6 +76,7 @@ fun MovieViewItem(model: MovieLocal) {
                         platformStyle = PlatformTextStyle(includeFontPadding = false)
                     )
                 )
+                Spacer(modifier = Modifier.padding(8.dp))
                 Text(
                     text = model.description,
                     textAlign = TextAlign.Start,
@@ -86,16 +91,27 @@ fun MovieViewItem(model: MovieLocal) {
                     if (model.isFavorite) R.string.remove else R.string.like
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                     TextButton(
-                        onClick = {}, modifier = Modifier
+                        onClick = { onLikeClickCallback.invoke(model) }, modifier = Modifier
                             .padding(end = 16.dp)
                     ) {
                         Text(text = stringResource(id = textLikeButtonResourceId).uppercase())
                     }
-                    TextButton(onClick = { }) {
+                    TextButton(onClick = { shareData(model, context)}) {
                         Text(text = stringResource(id = R.string.share).uppercase())
                     }
                 }
             }
         }
     }
+}
+
+private fun shareData(model: MovieLocal, context: Context) {
+    val content = "${model.title}\n${model.description}"
+    val sendIntent: Intent = Intent().apply {
+        action = Intent.ACTION_SEND
+        putExtra(Intent.EXTRA_TEXT, content)
+        type = "text/plain"
+    }
+    val shareIntent = Intent.createChooser(sendIntent, null)
+    context.startActivity(shareIntent)
 }

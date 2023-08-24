@@ -8,7 +8,7 @@ class ChangeFavoriteStatusUseCase @Inject constructor(
     private val repository: MoviesRepository
 ) {
 
-    suspend operator fun invoke(movie: MovieLocal) {
-        repository.changeFavoriteStatusMovie(movie)
+    suspend operator fun invoke(movie: MovieLocal): List<MovieLocal> {
+        return repository.changeFavoriteStatusMovie(movie)
     }
 }

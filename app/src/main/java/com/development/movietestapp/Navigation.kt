@@ -9,7 +9,7 @@ import com.development.movietestapp.ui.screens.LoginScreen
 
 @Composable
 fun MovieAppNavigation(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = NavigationRoute.LOGIN.route) {
+    NavHost(navController = navController, startDestination = NavigationRoute.HOME.route) {
         composable(NavigationRoute.LOGIN.route) {
             LoginScreen(navController)
         }
@@ -20,6 +20,5 @@ fun MovieAppNavigation(navController: NavHostController) {
 }
 
 enum class NavigationRoute (val route: String) {
-    LOGIN("login"), HOME("home"),
-    ALL_MOVIES("all_movies"), FAVORITE_MOVIES("favorite_movies")
+    LOGIN("login"), HOME("home")
 }

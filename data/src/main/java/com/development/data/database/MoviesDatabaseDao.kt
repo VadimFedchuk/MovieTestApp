@@ -10,17 +10,17 @@ import com.development.data.entities.MoviesDbModel
 interface MoviesDatabaseDao {
 
     @Query("SELECT * FROM moviesdbmodel")
-    fun getMoviesFromDatabase(): List<MoviesDbModel>
+    suspend fun getMoviesFromDatabase(): List<MoviesDbModel>
 
     @Query("SELECT * FROM moviesdbmodel WHERE is_favorite=1")
-    fun getFavoriteMoviesFromDatabase(): List<MoviesDbModel>
+    suspend fun getFavoriteMoviesFromDatabase(): List<MoviesDbModel>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveMovies(news: List<MoviesDbModel>)
+    suspend fun saveMovies(news: List<MoviesDbModel>)
 
     @Query("UPDATE moviesdbmodel SET is_favorite=:bookmark WHERE id=:id")
-    fun updateBookmarkById(id: Int, bookmark: Boolean)
+    suspend fun updateBookmarkById(id: Int, bookmark: Boolean)
 
     @Query("DELETE FROM moviesdbmodel")
-    fun deleteAll()
+    suspend fun deleteAll()
 }
