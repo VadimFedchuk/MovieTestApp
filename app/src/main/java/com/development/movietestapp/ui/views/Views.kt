@@ -1,8 +1,10 @@
 package com.development.movietestapp.ui.views
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -18,6 +20,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -26,21 +29,25 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.development.movietestapp.ui.theme.DarkBlue
 import com.development.movietestapp.ui.theme.DisActiveTabColorText
+import com.development.movietestapp.utils.IMAGE_SIZE
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
 import kotlinx.coroutines.launch
 
 @Composable
 fun CircleImage(imageUrl: String) {
+    Log.i("TestDebug", "url $imageUrl")
     Box(
         modifier = Modifier
             .padding(end = 16.dp, top = 16.dp)
             .clip(CircleShape)
-            .size(40.dp)
+            .size(IMAGE_SIZE.dp)
     ) {
         Image(
+            modifier = Modifier.fillMaxSize(),
             painter = rememberAsyncImagePainter(imageUrl),
             contentDescription = "avatar",
+            contentScale = ContentScale.Fit,
         )
     }
 }

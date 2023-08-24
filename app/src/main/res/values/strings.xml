@@ -6,4 +6,9 @@
     <string name="share">Share</string>
     <string name="like">Like</string>
     <string name="remove">Remove</string>
+
+    <string name="facebook_app_id">236045235592786</string>
+    <string name="fb_login_protocol_scheme">fb236045235592786</string>
+    <string name="facebook_client_token">405c2cd38b438bfe4007aa84ad7af1ab</string>
+    <string name="error_text">Something went wrong</string>
 </resources>

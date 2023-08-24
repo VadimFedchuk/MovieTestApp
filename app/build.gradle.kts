@@ -75,6 +75,7 @@ dependencies {
     /*Dagger.Hilt*/
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-compiler:2.44")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
     implementation("androidx.navigation:navigation-compose:2.7.0")
 
@@ -85,5 +86,8 @@ dependencies {
 
     implementation("io.coil-kt:coil-compose:2.0.0-rc01")
 
-    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+    implementation("com.facebook.android:facebook-android-sdk:[8,9)")
+    implementation("com.facebook.android:facebook-login:latest.release")
+
+
 }
