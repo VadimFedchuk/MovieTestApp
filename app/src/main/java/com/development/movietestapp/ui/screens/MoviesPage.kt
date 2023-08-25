@@ -17,6 +17,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,13 +30,21 @@ import com.development.movietestapp.ui.listItems.MovieViewItem
 import com.development.movietestapp.ui.theme.DarkBlue
 import com.development.movietestapp.ui.views.LoadingView
 import com.development.movietestapp.viewModels.MoviesViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MoviesPage(viewModel: MoviesViewModel) {
     val moviesPageState = viewModel.uiState.collectAsState()
-    val refreshing by remember { mutableStateOf(moviesPageState.value == State.Loading<Any>()) }
+    val scope = rememberCoroutineScope()
+    var refreshing by remember { mutableStateOf(moviesPageState.value == State.Loading<Any>()) }
     val state = rememberPullRefreshState(refreshing = refreshing, onRefresh = {
+        scope.launch {
+            refreshing = true
+            delay(1000)
+            refreshing = false
+        }
         viewModel.getMovies(false)
     })
     when (moviesPageState.value) {

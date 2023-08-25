@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -78,7 +79,8 @@ fun TabsContent(pagerState: PagerState, viewModel: MoviesViewModel) {
         state = pagerState,
         modifier = Modifier
             .fillMaxSize()
-            .background(MainBackgroundColor),
+            .background(MainBackgroundColor)
+            .padding(bottom = 16.dp),
         verticalAlignment = Alignment.Top
     ) {
         when (it) {
