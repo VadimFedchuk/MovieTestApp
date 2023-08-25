@@ -5,13 +5,11 @@ import com.development.data.entities.MovieRemote
 import com.development.data.entities.MoviesDbModel
 import com.development.data.entities.MoviesResponse
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.Locale
 import javax.inject.Inject
 
 class ResponseDataMapper @Inject constructor() {
-    fun toNewsModel(response: MoviesResponse): List<MoviesDbModel> {
+    fun toMoviesDbModel(response: MoviesResponse): List<MoviesDbModel> {
         return response.movieRemotes?.map { parseMovie(it) }?.toList() ?: arrayListOf()
     }
 

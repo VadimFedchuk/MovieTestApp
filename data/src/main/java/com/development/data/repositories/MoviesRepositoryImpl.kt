@@ -19,7 +19,7 @@ class MoviesRepositoryImpl @Inject constructor(
     override suspend fun getMovies(page: Int): List<MovieLocal> {
         return try {
             val remoteData = remoteDataSource.getMoviesFromServer(page = page)
-            val convertedRemoteData: List<MoviesDbModel> = responseDataMapper.toNewsModel(remoteData)
+            val convertedRemoteData: List<MoviesDbModel> = responseDataMapper.toMoviesDbModel(remoteData)
             val localData = localDataSource.getMoviesFromDatabase()
             val result = combineRemoteAndLocal(convertedRemoteData, localData)
             localDataSource.setMoviesToDatabase(result)
