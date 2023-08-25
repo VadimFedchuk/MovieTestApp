@@ -34,7 +34,7 @@ import com.development.movietestapp.viewModels.MoviesViewModel
 @Composable
 fun MoviesPage(viewModel: MoviesViewModel) {
     val moviesPageState = viewModel.uiState.collectAsState()
-    val refreshing by remember { mutableStateOf(false) }
+    val refreshing by remember { mutableStateOf(moviesPageState.value == State.Loading<Any>()) }
     val state = rememberPullRefreshState(refreshing = refreshing, onRefresh = {
         viewModel.getMovies(false)
     })

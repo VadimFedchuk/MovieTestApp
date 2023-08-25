@@ -31,7 +31,8 @@ class MoviesViewModel @Inject constructor(
         viewModelScope.launch {
             if (loadMore) ++page
             val previousData =
-                if (_uiState.value is State.Success) (_uiState.value as State.Success<List<MovieLocal>>).data else emptyList()
+                if (loadMore && _uiState.value is State.Success)
+                        (_uiState.value as State.Success<List<MovieLocal>>).data else emptyList()
             val dataState = getMoviesUseCase.invoke(page = page)
             if (dataState is State.Success) {
                 val result = dataState.data + previousData
