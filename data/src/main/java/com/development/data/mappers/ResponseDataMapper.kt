@@ -28,10 +28,14 @@ class ResponseDataMapper @Inject constructor() {
     }
 
     private fun formatDate(inputDate: String): String {
-        val inputFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-        val outputFormatter = SimpleDateFormat("MMM yyyy", Locale.ENGLISH)
+        return try {
+            val inputFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+            val outputFormatter = SimpleDateFormat("MMM yyyy", Locale.ENGLISH)
 
-        val date = inputFormatter.parse(inputDate)
-        return outputFormatter.format(date)
+            val date = inputFormatter.parse(inputDate)
+            outputFormatter.format(date)
+        } catch (_:Exception) {
+            ""
+        }
     }
 }

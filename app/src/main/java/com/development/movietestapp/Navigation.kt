@@ -9,7 +9,7 @@ import com.development.movietestapp.ui.screens.LoginScreen
 
 @Composable
 fun MovieAppNavigation(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = NavigationRoute.HOME.route) {
+    NavHost(navController = navController, startDestination = NavigationRoute.LOGIN.route) {
         composable(NavigationRoute.LOGIN.route) {
             LoginScreen(navController)
         }
