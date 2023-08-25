@@ -1,6 +1,5 @@
 package com.development.data.repositories
 
-import android.util.Log
 import com.development.data.datasources.LocalDataSource
 import com.development.data.datasources.RemoteDataSource
 import com.development.data.entities.MoviesDbModel
@@ -21,8 +20,10 @@ class MoviesRepositoryImpl @Inject constructor(
         return try {
             val remoteData = remoteDataSource.getMoviesFromServer(page = page)
             val convertedRemoteData: List<MoviesDbModel> = responseDataMapper.toNewsModel(remoteData)
-            localDataSource.setMoviesToDatabase(convertedRemoteData)
-            convertedRemoteData.map { databaseDataMapper.toMovieLocal(it) }.toList()
+            val localData = localDataSource.getMoviesFromDatabase()
+            val result = combineRemoteAndLocal(convertedRemoteData, localData)
+            localDataSource.setMoviesToDatabase(result)
+            result.map { databaseDataMapper.toMovieLocal(it) }.toList()
         } catch (e: Exception) {
             val localSavedData = localDataSource.getMoviesFromDatabase()
             if (localSavedData.isEmpty()) {
@@ -41,5 +42,18 @@ class MoviesRepositoryImpl @Inject constructor(
     override suspend fun changeFavoriteStatusMovie(movie: MovieLocal):List<MovieLocal> {
         localDataSource.updateFavoriteStatus(movie)
         return getFavoriteMovies()
+    }
+
+    private fun combineRemoteAndLocal(remote: List<MoviesDbModel>, local: List<MoviesDbModel>): List<MoviesDbModel> {
+        val result = ArrayList<MoviesDbModel>()
+        for (mainMovie in remote) {
+            val matchingFavorite = local.find { it.id == mainMovie.id }
+            if (matchingFavorite == null) {
+                result.add(mainMovie)
+            } else {
+                result.add(mainMovie.copy(isFavorite = matchingFavorite.isFavorite))
+            }
+        }
+        return result
     }
 }
