@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
@@ -13,7 +15,9 @@ import androidx.compose.material.pullrefresh.PullRefreshState
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,6 +33,8 @@ import com.development.movietestapp.ui.listItems.DateViewItem
 import com.development.movietestapp.ui.listItems.MovieViewItem
 import com.development.movietestapp.ui.theme.DarkBlue
 import com.development.movietestapp.ui.views.LoadingView
+import com.development.movietestapp.utils.isScrolledToTheEnd
+import com.development.movietestapp.utils.isSecondDateBeforeFirst
 import com.development.movietestapp.viewModels.MoviesViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -67,18 +73,36 @@ fun SuccessStateMoviesPage(
     data: List<MovieLocal>,
     refreshing: Boolean
 ) {
-    val grouped = data.groupBy { it.publishedAt }
+    val sortedByDate = data.sortedBy { it.publishedAt }
+    Log.i("TestDebug", "SuccessStateMoviesPage ${data.size}")
     Box(Modifier.pullRefresh(state)) {
-        LazyColumn {
-            grouped.forEach { (date, movies) ->
-                stickyHeader {
-                    DateViewItem(date = date)
-                }
-                items(movies) {
-                    MovieViewItem(model = it) { favorite ->
-                        viewModel.changeFavoriteStatus(favorite)
+        val scrollState = rememberLazyListState()
+
+        LazyColumn(state = scrollState) {
+            var previousDate: String? = null
+            sortedByDate.forEachIndexed { index, movieLocal ->
+                if (previousDate == null || previousDate.isSecondDateBeforeFirst(movieLocal.publishedAt)) {
+                    item {
+                        DateViewItem(date = movieLocal.publishedAt)
+                    }
+                    item {
+                        MovieViewItem(model = movieLocal) { favorite ->
+                            viewModel.changeFavoriteStatus(favorite)
+                        }
+                    }
+                    previousDate = movieLocal.publishedAt
+                }  else {
+                    item {
+                        MovieViewItem(model = movieLocal) { favorite ->
+                            viewModel.changeFavoriteStatus(favorite)
+                        }
                     }
                 }
+            }
+
+            if (scrollState.firstVisibleItemIndex == data.size) {
+                item { LoadingView() }
+                viewModel.loadMoreMovies()
             }
         }
 

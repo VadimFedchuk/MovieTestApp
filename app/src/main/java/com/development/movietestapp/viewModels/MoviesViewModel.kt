@@ -1,5 +1,6 @@
 package com.development.movietestapp.viewModels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.development.domain.State
@@ -29,7 +30,7 @@ class MoviesViewModel @Inject constructor(
 
     fun getMovies(loadMore: Boolean) {
         viewModelScope.launch {
-            if (loadMore) ++page
+            if (loadMore) ++page else page = 1
             val previousData =
                 if (loadMore && _uiState.value is State.Success)
                         (_uiState.value as State.Success<List<MovieLocal>>).data else emptyList()
@@ -47,8 +48,9 @@ class MoviesViewModel @Inject constructor(
 
     fun loadMoreMovies() {
         viewModelScope.launch {
-            _uiState.emit(State.Loading())
-            getMovies(loadMore = true)
+            if (_uiState.value != State.Loading<Any>()) {
+                getMovies(loadMore = true)
+            }
         }
     }
 
