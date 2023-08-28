@@ -1,6 +1,5 @@
 package com.development.movietestapp.viewModels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.development.domain.State

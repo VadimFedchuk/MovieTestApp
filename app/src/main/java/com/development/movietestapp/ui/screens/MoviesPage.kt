@@ -65,7 +65,7 @@ fun MoviesPage(viewModel: MoviesViewModel) {
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SuccessStateMoviesPage(
     viewModel: MoviesViewModel,
@@ -74,7 +74,6 @@ fun SuccessStateMoviesPage(
     refreshing: Boolean
 ) {
     val sortedByDate = data.sortedBy { it.publishedAt }
-    Log.i("TestDebug", "SuccessStateMoviesPage ${data.size}")
     Box(Modifier.pullRefresh(state)) {
         val scrollState = rememberLazyListState()
 
