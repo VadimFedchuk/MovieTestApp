@@ -3,7 +3,6 @@ package com.development.data
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.development.data.database.MoviesDatabase
 import com.development.data.database.MoviesDatabaseDao
 import com.development.data.entities.MovieRemote
@@ -22,6 +21,7 @@ import kotlin.random.Random
 
 @RunWith(RobolectricTestRunner::class)
 class DataTests {
+
     private lateinit var moviesDatabaseDao: MoviesDatabaseDao
     private lateinit var database: MoviesDatabase
     private val responseDataMapper: ResponseDataMapper = ResponseDataMapper()
