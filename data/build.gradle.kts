@@ -73,6 +73,7 @@ dependencies {
     implementation("androidx.room:room-ktx:2.5.2")
     testImplementation("androidx.room:room-testing:2.5.2")
 
+    /*Tests*/
     testImplementation("androidx.test.ext:junit:1.1.5")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
     testImplementation("org.robolectric:robolectric:4.9")

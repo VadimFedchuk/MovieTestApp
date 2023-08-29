@@ -1,13 +1,9 @@
 package com.development.movietestapp.ui.screens
 
-import android.util.Log
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
@@ -15,9 +11,7 @@ import androidx.compose.material.pullrefresh.PullRefreshState
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,7 +27,6 @@ import com.development.movietestapp.ui.listItems.DateViewItem
 import com.development.movietestapp.ui.listItems.MovieViewItem
 import com.development.movietestapp.ui.theme.DarkBlue
 import com.development.movietestapp.ui.views.LoadingView
-import com.development.movietestapp.utils.isScrolledToTheEnd
 import com.development.movietestapp.utils.isSecondDateBeforeFirst
 import com.development.movietestapp.viewModels.MoviesViewModel
 import kotlinx.coroutines.delay
@@ -98,8 +91,7 @@ fun SuccessStateMoviesPage(
                     }
                 }
             }
-
-            if (scrollState.firstVisibleItemIndex == data.size) {
+            if (scrollState.firstVisibleItemIndex == data.size.minus(data.size.div(20))) {
                 item { LoadingView() }
                 viewModel.loadMoreMovies()
             }

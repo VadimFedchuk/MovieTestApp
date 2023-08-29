@@ -79,12 +79,14 @@ dependencies {
 
     implementation("androidx.navigation:navigation-compose:2.7.0")
 
+    /*ViewPager*/
     implementation("com.google.accompanist:accompanist-pager:0.13.0")
     implementation("com.google.accompanist:accompanist-pager-indicators:0.13.0")
 
     // rememberAsyncImagePainter
     implementation("io.coil-kt:coil-compose:2.0.0-rc01")
 
+    /*Facebook*/
     implementation("com.facebook.android:facebook-android-sdk:[8,9)")
     implementation("com.facebook.android:facebook-login:latest.release")
 
@@ -94,9 +96,6 @@ dependencies {
     testImplementation("androidx.test.ext:junit:1.1.5")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
     testImplementation("org.robolectric:robolectric:4.9")
-
-    // For Robolectric tests.
     testImplementation("com.google.dagger:hilt-android-testing:2.44")
-    // ...with Kotlin.
     kaptTest("com.google.dagger:hilt-android-compiler:2.44")
 }
